@@ -24,10 +24,19 @@ se_t stack_pop(void) {
 
 se_t stack_peek(void) { return *top_of_stack; }
 
+se_t stack_read(unsigned int i) { return *(top_of_stack - i + 1); }
+
 void stack_clear(void) {
     bottom_of_stack = realloc(bottom_of_stack, 0);
     stack_size = 0;
-    printf("[%p]", bottom_of_stack);
+    //printf("[%p]", bottom_of_stack);
+}
+
+void stack_swap(void) {
+    se_t t1 = stack_pop();
+    se_t t2 = stack_pop();
+    stack_push(t1);
+    stack_push(t2);
 }
 
 void stack_print() {

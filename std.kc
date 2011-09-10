@@ -1,0 +1,32 @@
+
+q: built-in
+c: built-in
+swp: built-in
+x: built-in
++: built-in
+^: built-in
+*: built-in
+/: built-in
+>: built-in
+nand: built-in
+
+==: [2] [2] > [3] [3] < and ! swp x swp x
+abs: 2 ^ 0.5 ^
+e: 2.71822 
+pi: 3.14159
+!=: == !
+dup: [1]
+dup2: [2] [1]
+-: -1 * +
+<: swp >
+>=: < !
+<=: > !
+not: dup nand
+!: not
+and: nand not
+or: ! swp ! and !
+nor: not or
+xor: dup nand swp [2] nand swp [3] nand nand swp x
+xnor: xor not
+max: [2] [2] > [3] [3] < [3] * swp [4] * + swp x swp x
+min: [2] [2] < [3] [3] > [3] * swp [4] * + swp x swp x 
