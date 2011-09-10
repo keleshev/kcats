@@ -10,15 +10,15 @@ x: built-in
 >: built-in
 nand: built-in
 
-==: [2] [2] > [3] [3] < and ! swp x swp x
+<: swp >
 abs: 2 ^ 0.5 ^
+==: [2] [2] > [3] [3] < or ! swp x swp x
 e: 2.71822 
 pi: 3.14159
 !=: == !
 dup: [1]
 dup2: [2] [1]
 -: -1 * +
-<: swp >
 >=: < !
 <=: > !
 not: dup nand
