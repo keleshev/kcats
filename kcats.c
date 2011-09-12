@@ -44,6 +44,7 @@ bool eval_word(char w[]) {
     //else if(seq(w, "")) printf("oh, hai");
     else if(seq(w, "q")) exit(0);
     else if(seq(w, "return")) return false;
+    else if(seq(w, ".")) return false;
    // else if(seq(w, "then")) { return false;}
     else if(seq(w, "log")) stack_print();
     else if(seq(w, "c")) stack_clear();
@@ -54,8 +55,8 @@ bool eval_word(char w[]) {
     else if(seq(w, "*")) stack_infix(*);
     else if(seq(w, "/")) stack_infix(/);
     else if(seq(w, ">")) stack_infix(>);
-    else if(seq(w, "!")) stack_prefix_1(!);
-    else if(seq(w, "and")) stack_infix(&&);
+    //else if(seq(w, "!")) stack_prefix_1(!);
+    //else if(seq(w, "and")) stack_infix(&&);
     else if((p = find_def(w, code)) != NULL) eval(p);
     else printf(RED "%s? \n" DEFAULT, w); 
     return true;
@@ -74,7 +75,15 @@ void eval(char sentence[]) {
         if(seq(next, "then")) {
             rest = next_cmd(next, rest);
             if(stack_peek()==0) rest = next_cmd(next, rest);
-            //printf(next);
+            stack_pop();
+        }
+        if(seq(next, ":")) {
+            rest = next_cmd(next, rest);
+            if(stack_peek()==0) { 
+                rest = strstr(rest, ".");
+                rest = next_cmd(next, rest);
+                rest = next_cmd(next, rest);
+            }
             stack_pop();
         }
         if(eval_word(next)) eval(rest);

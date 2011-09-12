@@ -4,6 +4,11 @@ char code[] = "\n"
 "max: [2] [2] > [3] [3] swp > [3] * swp [4] * + swp x swp x return \n"
 "e: 2.71822 return \n"
 "pi: 3.14159 return \n"
+"not: 0 == then 1 [1] 1 == then . 0 . \n"
+"!: not . \n"
+"if: . \n"
+"bool: ! ! . \n"
+"and: * bool . \n"
 "!=: == ! return \n"
 "<: swp > return \n"
 "-: -1 * + return \n"
@@ -13,7 +18,7 @@ char code[] = "\n"
 "fact: [1] 0 == then fact(0) [1] 1 == then return fact(n) return    \n"
 "fact(0): x 1 return  \n"
 "fact(n): [1] 1 - fact * return \n"      
-
+"do: 1 + [1] 10 > then . x do . \n"
 ;
 
 
