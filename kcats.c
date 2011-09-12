@@ -44,6 +44,8 @@ bool eval_word(char w[]) {
     //else if(seq(w, "")) printf("oh, hai");
     else if(seq(w, "q")) exit(0);
     else if(seq(w, "return")) return false;
+   // else if(seq(w, "then")) { return false;}
+    else if(seq(w, "log")) stack_print();
     else if(seq(w, "c")) stack_clear();
     else if(seq(w, "swp")) stack_swap();
     else if(seq(w, "x")) stack_pop();
@@ -68,8 +70,13 @@ void eval(char sentence[]) {
     
     if(is_definition(next)) {
         printf("Unimplemented \n");
-    }
-    else {
+    } else {
+        if(seq(next, "then")) {
+            rest = next_cmd(next, rest);
+            if(stack_peek()==0) rest = next_cmd(next, rest);
+            //printf(next);
+            stack_pop();
+        }
         if(eval_word(next)) eval(rest);
     }
 }
