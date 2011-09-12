@@ -56,7 +56,7 @@ bool eval_word(char w[]) {
     else if(seq(w, "/")) stack_infix(/);
     else if(seq(w, ">")) stack_infix(>);
     //else if(seq(w, "!")) stack_prefix_1(!);
-    //else if(seq(w, "and")) stack_infix(&&);
+    else if(seq(w, "==")) stack_infix(==);
     else if((p = find_def(w, code)) != NULL) eval(p);
     else printf(RED "%s? \n" DEFAULT, w); 
     return true;
