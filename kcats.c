@@ -6,12 +6,17 @@
 #include <math.h>
 #include <iso646.h>
 
+#define YELLOW  "\e[1;33m"
+#define PURPLE  "\e[1;35m"
+#define BLUE    "\e[1;34m"
+#define RED     "\e[1;31m"
+#define DEFAULT "\e[0m"
+
+#define log(v) printf(PURPLE "\n[%s:%d] " #v " == " BLUE "%s \n" DEFAULT, __FILE__, __LINE__, v)
+
 #include "stack.c"
 #include "code.c"
 
-#define YELLOW  "\e[1;33m"
-#define RED     "\e[1;31m"
-#define DEFAULT "\e[0m"
 
 bool seq(char s1[], char s2[]) {  // string equal
     if(strcmp(s1, s2) == 0) return true; 
@@ -31,18 +36,26 @@ char *next_cmd(char f[], char s[]) {
         else if(j > 0) break;
         i++;
     }
-    f[j] = '\0';
+    f[j] = '\0';           
     return &s[i];
 }
 
-bool eval_word(char w[]) {
+bool eval_word(char w[], char source[]) {
+    char w2[80];
+    //strcpy(w, word);
     se_t number;
-    char *p;
-    unsigned index; 
-    if(sscanf(w, "%lf", &number) == 1) stack_push(number);
-    else if(sscanf(w, "[%u]", &index) == 1) stack_push(stack_read(index));
+    se_t n2;
+    //char *str[80];
+    char *p;                      
+    unsigned index;                                           
+    if(sscanf(w, "%lf", &number) == 1) 
+        {stack_push(number);}
+    else 
+        if(sscanf(w, "[%u]", &index) == 1) stack_push(stack_read(index));
+    //else if(sscanf(w, "'%[ -~^']'", str) == 1) printf(str);
     //else if(seq(w, "")) printf("oh, hai");
-    else if(seq(w, "q")) exit(0);
+    else 
+        if(seq(w, "q")) exit(0);
     else if(seq(w, "return")) return false;
     else if(seq(w, ".")) return false;
    // else if(seq(w, "then")) { return false;}
@@ -57,12 +70,12 @@ bool eval_word(char w[]) {
     else if(seq(w, ">")) stack_infix(>);
     //else if(seq(w, "!")) stack_prefix_1(!);
     else if(seq(w, "==")) stack_infix(==);
-    else if((p = find_def(w, code)) != NULL) eval(p);
-    else printf(RED "%s? \n" DEFAULT, w); 
+    else if(p = find_def(w, source), p != NULL) eval(p, source);
+    else printf(RED "%s? \n" DEFAULT, w);    
     return true;
 }
 
-void eval(char sentence[]) {
+void eval(char sentence[], char source[]) {
     char next[80]; //, rest[80];
     char *rest;
     rest = next_cmd(next, sentence);
@@ -85,20 +98,20 @@ void eval(char sentence[]) {
                 rest = next_cmd(next, rest);
             }
             stack_pop();
-        }
-        if(eval_word(next)) eval(rest);
+        }                   
+        if(eval_word(next, source)) eval(rest, source);
     }
 }
      
 int main() {
-
+    char *src = add_src(std, NULL); 
     char buffer[80];
 
     while(1) {
         stack_print();
         printf(YELLOW "> " DEFAULT);  // ➤
         fgets(buffer, 80, stdin); 
-        eval(buffer);
+        eval(buffer, src);
     }
 }
     
