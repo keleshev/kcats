@@ -56,6 +56,7 @@ bool eval_word(char w[], char source[]) {
     //else if(seq(w, "")) printf("oh, hai");
     else 
         if(seq(w, "q")) exit(0);
+    else if(seq(w, "context")) printf(source);
     else if(seq(w, "return")) return false;
     else if(seq(w, ".")) return false;
    // else if(seq(w, "then")) { return false;}
@@ -76,6 +77,7 @@ bool eval_word(char w[], char source[]) {
 }
 
 void eval(char sentence[], char source[]) {
+    
     char next[80]; //, rest[80];
     char *rest;
     rest = next_cmd(next, sentence);
@@ -97,14 +99,20 @@ void eval(char sentence[], char source[]) {
                 rest = next_cmd(next, rest);
                 rest = next_cmd(next, rest);
             }
-            stack_pop();
+            //stack_pop();
         }                   
         if(eval_word(next, source)) eval(rest, source);
     }
 }
      
 int main() {
+
+    FILE* f = fopen("std.kc", "r");
+    
     char *src = add_src(std, NULL); 
+    //char *ar *src = add_src_from_file(f, NULL);
+    src = add_src_from_file(f, NULL);
+    
     char buffer[80];
 
     while(1) {
