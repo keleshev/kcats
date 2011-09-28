@@ -17,10 +17,12 @@ char std[] = "\n"
 "-: -1 * + return \n"
 "or: ! swp ! and ! return\n"
 //"==: [2] [2] > [3] [3] < or ! swp x swp x return \n"
-"fact: if [1] 0 == : x 1 .                  \n"
-"                    [1] 1 - fact * .       \n"
+"fact: if [1] 0 == : x x 1 .                  \n"
+"                    x [1] 1 - fact * .                  \n"
+"                    x 1 - fact * .       \n"
 //"do: 1 + [1] 10 > then . x do . \n"
 ;
+
 
 char *add_src(char *new, char *old) {
     old = realloc(old, sizeof(old) + sizeof(new) - 1);
