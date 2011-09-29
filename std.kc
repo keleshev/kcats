@@ -1,0 +1,115 @@
+################################################################################
+#                       --- kcats standard library ---
+# 
+# Syntax:
+# 
+#     <command> 
+#         Enter a textual <command> or several to execute on stack.
+#         E.g. `fact` command will yield factorial of top-of-stack.
+# 
+#     <number>
+#         Enter a <number> to push it on stack.
+#         E.g. `1 500 10e-35 Inf NaN` will push the corresponding
+#         floating-point values on stack.
+# 
+#     [<number>] 
+#         Push a copy of <number>-th element on stack.
+#         E.g. if stack consist of `2 4 8`, [1] will push the first
+#         number (8) on top of stack: `2 4 8 8`.
+# 
+#     <name>: <commands> return 
+#         Definition of <name> command, <commands> will be executed 
+#         until 'return' keyword is encountered.
+# 
+#     if <condition> then <commands> return <other-commands>
+#         If <condition> commands yields a non-zero value, 
+#         then <commands> are executed until 'return' is encounterd;
+#         if <condition> yields zero value, <other-commands> are
+#         executed (commands after the closest 'return'.
+# 
+#     . (i.e. dot) 
+#         A short synonim for 'return' keyword.
+#     
+#     : (i.e. colon)
+#         A short synonim for 'then' keyword.                
+#     
+#     <filename>.kc (TODO implement)
+#         Load definitions from .kc file with <filename>-name.
+#         E.g. 'math.kc' with load file math.kc from current directory.
+# 
+# Special commands:
+#     q - quit kcats.
+#     context - show executing context (definitions).
+#     help - same as 'context' (TODO implement).
+#     c - clear stack.
+#     x - delete/pop top element from stack.
+#     swp - swap two top elements on stack.
+# 
+# Builtins:
+#     +  (sum)
+#     ^  (power)
+#     *  (product)
+#     /  (division)
+#     >  (greater-than)
+#     == (test for equality)
+
+# 
+# Standard definitons:
+#
+
+# Constants:
+
+true:  1 . 
+false: 0 . 
+
+e:  2.71822 . 
+pi: 3.14159 . 
+
+
+# Logical operations:
+
+not:  0 == .  
+!:    not .         # '!' short for 'not'
+bool: not not . 
+and:  * bool . 
+or:   ! swp ! and ! return
+
+if:   .     # Guess why 'if' and 'else'
+else: .     # have such strange definitions?
+
+
+# Comparison operators:
+
+!=: == ! .      # not equal
+<: swp > .      # less-than
+
+
+# Math:
+
+-: -1 * + return     # substraction
+max: [2] [2] if > : x x . x swp x .
+
+
+# Factorial - long version
+
+factorial: 
+    if [1] 0 == then
+        x x 1 
+    return
+    else
+        x [1] 1 - factorial * 
+    return
+
+
+# Fact. shrt. ver.
+
+fact: [1] 0 == : x x 1 .                  
+                 x [1] 1 - fact * .                  
+
+
+# Note that factorial versions above are identical
+# except for keywords usage.
+
+
+
+
