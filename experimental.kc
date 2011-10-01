@@ -1,48 +1,6 @@
-max:             # a b
-    [2] [2] >    # a>b
-    [3] [3] <    # a<b
-    [3] *        # a>b * a
-    swp [4] *    # a<b * b
-    +            # result
-    swp x swp x  # clean up
-    ret
 
-max{             # a b
-    [2] [2] >    # a>b
-    [3] [3] <    # a<b
-    [3] *        # a>b * a
-    swp [4] *    # a<b * b
-    +            # result
-    swp x swp x  # clean up
-}
 
-k> 10 20 max -1 *
 
-math.sqrt
-
-q: built-in
-c: built-in
-swp: built-in
-x: built-in
-+: built-in
-^: built-in
-*: built-in
-/: built-in
->: built-in
-nand: built-in
-
-# num -> bool
-not: 0? -> 1 . 0
-
-# num num -> bool
-and: * bool .
-
-# num -> bool
-bool: not not .
-
-e1 : c1 ,
-e2 : c2 ,
-   : c3 .
 
 sign: 
     if [1] 0 > then x +1 return
@@ -97,23 +55,8 @@ fact:
   x [1] 1 == :           [1] 1 - fact * .
              
 
-<: swp >
-abs: 2 ^ 0.5 ^
-==: [2] [2] > [3] [3] < or ! swp x swp x
-e: 2.71822 
-pi: 3.14159
-!=: == !
+nand: built-in
 dup: [1]
 dup2: [2] [1]
--: -1 * +
->=: < !
-<=: > !
-not: dup nand
-!: not
-and: nand not
-or: ! swp ! and !
-nor: not or
 xor: dup nand swp [2] nand swp [3] nand nand swp x
 xnor: xor not
-max: [2] [2] > [3] [3] < [3] * swp [4] * + swp x swp x
-min: [2] [2] < [3] [3] > [3] * swp [4] * + swp x swp x 
