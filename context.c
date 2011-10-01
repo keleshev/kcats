@@ -60,11 +60,11 @@ char *context_add_file(char *context, char *filename) {
 
 
 // context_find_def
-char *find_def(char *word, const char *source) {
+char *find_def(char *word, const char *context) {
     char def[sizeof(word) + 2];
     sprintf(def, "\n%s:", word);
                    
-    char *r = strstr(source, def);
+    char *r = strstr(context, def);
     if(r == NULL) return NULL;
     else return r + strlen(def);
 }       

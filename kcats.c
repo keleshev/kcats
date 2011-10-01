@@ -40,7 +40,7 @@ char *next_cmd(char f[], char s[]) {
     return &s[i];
 }
 
-bool eval_word(char w[], char source[]) {
+bool eval_word(char w[], char context[]) {
     char w2[80];
     //strcpy(w, word);
     se_t number;
@@ -56,7 +56,7 @@ bool eval_word(char w[], char source[]) {
     //else if(seq(w, "")) printf("oh, hai");
     else 
         if(seq(w, "q")) exit(0);
-    else if(seq(w, "context")) printf(source);
+    else if(seq(w, "context")) printf(context);
     else if(seq(w, "return")) return false;
     else if(seq(w, ".")) return false;
    // else if(seq(w, "then")) { return false;}
@@ -71,12 +71,12 @@ bool eval_word(char w[], char source[]) {
     else if(seq(w, ">")) stack_infix(>);
     //else if(seq(w, "!")) stack_prefix_1(!);
     else if(seq(w, "==")) stack_infix(==);
-    else if(p = find_def(w, source), p != NULL) eval(p, source);
+    else if(p = find_def(w, context), p != NULL) eval(p, context);
     else printf(RED "%s? \n" DEFAULT, w);    
     return true;
 }
 
-void eval(char sentence[], char source[]) {
+void eval(char sentence[], char context[]) {
     
     char next[80]; //, rest[80];
     char *rest;
@@ -101,14 +101,14 @@ void eval(char sentence[], char source[]) {
             }
             //stack_pop();
         }                   
-        if(eval_word(next, source)) eval(rest, source);
+        if(eval_word(next, context)) eval(rest, context);
     }
 }
      
 int main() {
-    char *src = context_new();
-    src = context_add(src, std);
-    src = context_add_file(src, "std.kc");
+    char *con = context_new();
+    con = context_add(con, std);
+    con = context_add_file(con, "std.kc");
     
     char buffer[80];
 
@@ -116,7 +116,7 @@ int main() {
         stack_print();
         printf(YELLOW "> " DEFAULT);  // ➤
         fgets(buffer, 80, stdin); 
-        eval(buffer, src);
+        eval(buffer, con);
     }
 }
     
