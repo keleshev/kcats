@@ -64,6 +64,14 @@ false: 0 .
 e:  2.71822 . 
 pi: 3.14159 . 
 
+# Syntactic sugar for duplication-d and deletion-x
+
+d: [1] .
+dd: [2] [2] .
+ddd: [3] [3] [3] .
+xx: x x .
+xxx: x x x .
+
 
 # Logical operations:
 
