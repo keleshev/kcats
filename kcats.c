@@ -107,19 +107,20 @@ int main() {
     char buffer[80];
     char *con; 
 
+    con = context_new();         
+    con = context_add(con, ""); // HACK  
+    con = context_add_file(con, "std.kc"); 
+
     while(1) {
         stack_print();
         printf(YELLOW "> " DEFAULT);  // ➤
         fgets(buffer, 80, stdin); 
 
-        con = context_new();         
-        con = context_add(con, ""); // HACK  
-        con = context_add_file(con, "std.kc"); 
         
         eval(buffer, con);
 
-        context_del(con);   //   log(con);
     }                        
+    context_del(con);   //   log(con);
 }
     
     
