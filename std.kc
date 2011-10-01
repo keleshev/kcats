@@ -93,6 +93,12 @@ else: .     # have such strange definitions?
 max: [2] [2] if > : x . x swp x .
 
 
+# Assert equal (draft, requires strings):
+# 
+# assert: 
+#   if [2] [2] == : x .     # if equal - do nothing
+#   else "assert error " pr pr " != " pr pr .     
+
 # Factorial - long version
 
 factorial: 
