@@ -103,18 +103,23 @@ void eval(char sentence[], char context[]) {
 }
      
 int main() {
-    char *con = context_new();
-    //con = context_add(con, std);
-    con = context_add_file(con, "std.kc");
     
     char buffer[80];
+    char *con; 
 
     while(1) {
         stack_print();
         printf(YELLOW "> " DEFAULT);  // ➤
         fgets(buffer, 80, stdin); 
+
+        con = context_new();         
+        con = context_add(con, ""); // HACK  
+        con = context_add_file(con, "std.kc"); 
+        
         eval(buffer, con);
-    }
+
+        context_del(con);   //   log(con);
+    }                        
 }
     
     
