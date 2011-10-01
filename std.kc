@@ -72,7 +72,7 @@ not:  0 == .
 !:    not .         # '!' short for 'not'
 bool: not not . 
 and:  * bool . 
-or:   ! swp ! and ! return
+or:   ! swp ! and ! .
 
 if:   .     # Guess why 'if' and 'else'
 else: .     # have such strange definitions?
@@ -86,18 +86,18 @@ else: .     # have such strange definitions?
 
 # Math:
 
--: -1 * + return     # substraction
+-: -1 * + .    # substraction
 max: [2] [2] if > : x x . x swp x .
 
 
 # Factorial - long version
 
-factorial: 
+factorial-old: 
     if [1] 0 == then
         x x 1 
     return
     else
-        x [1] 1 - factorial * 
+        x [1] 1 - factorial-old * 
     return
 
 
@@ -105,6 +105,9 @@ factorial:
 
 fact: [1] 0 == : x x 1 .                  
                  x [1] 1 - fact * .                  
+
+abcdefghij: [1] 0 == : x x 1 .                  
+                 x [1] 1 - abcdefghij * .                  
 
 
 # Note that factorial versions above are identical

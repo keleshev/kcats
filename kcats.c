@@ -79,7 +79,7 @@ bool eval_word(char w[], char context[]) {
 void eval(char sentence[], char context[]) {
     
     char next[80]; //, rest[80];
-    char *rest;
+    char *rest, *dot, *ret;
     rest = next_cmd(next, sentence);
                         //printf("[%s|%s]",next,rest);
     if(*next == '\0') return;
@@ -87,15 +87,12 @@ void eval(char sentence[], char context[]) {
     if(is_definition(next)) {
         printf("Unimplemented \n");
     } else {
-        if(seq(next, "then")) {
-            rest = next_cmd(next, rest);
-            if(stack_peek()==0) rest = next_cmd(next, rest);
-            stack_pop();
-        }
-        if(seq(next, ":")) {
+        if(seq(next, "then") or seq(next, ":")) {
             rest = next_cmd(next, rest);
             if(stack_peek()==0) { 
-                rest = strstr(rest, ".");
+                dot = strstr(rest, ".");
+                ret = strstr(rest, "return");
+                rest = dot < ret ? dot : ret;
                 rest = next_cmd(next, rest);
                 rest = next_cmd(next, rest);
             }
