@@ -71,7 +71,7 @@ bool eval_word(char w[], char context[]) {
     else if(seq(w, ">")) stack_infix(>);
     //else if(seq(w, "!")) stack_prefix_1(!);
     else if(seq(w, "==")) stack_infix(==);
-    else if(p = find_def(w, context), p != NULL) eval(p, context);
+    else if(p = context_find_def(context, w), p != NULL) eval(p, context);
     else printf(RED "%s? \n" DEFAULT, w);    
     return true;
 }

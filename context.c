@@ -38,7 +38,7 @@ char *context_add_file(char *context, char *filename) {
 
 
 // context_find_def
-char *find_def(char *word, const char *context) {
+char *context_find_def(char *context, char *word) {
     char def[sizeof(word) + 2];
     sprintf(def, "\n%s:", word);
                    
