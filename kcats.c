@@ -90,9 +90,18 @@ void eval(char sentence[], char context[]) {
         if(seq(next, "then") or seq(next, ":")) {
             rest = next_cmd(next, rest);
             if(stack_pop()==0) { 
-                rest = dot = strstr(rest, ".");
-                //ret = strstr(rest, "return");
-                //rest = dot < ret ? dot : ret;
+                dot = strstr(rest, ".");
+                ret = strstr(rest, "return");
+                if (dot != NULL and ret != NULL) {    
+                    // this gotta be slow:
+                    rest = strlen(dot) > strlen(ret) ? dot : ret;
+                } else if(dot == NULL and ret != NULL) {
+                    rest = ret;
+                } else if(dot != NULL and ret == NULL) {
+                    rest = dot;
+                } else {
+                    printf("then/: does not have a return/.");
+                }
                 rest = next_cmd(next, rest);
                 rest = next_cmd(next, rest);
             }

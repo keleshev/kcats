@@ -90,7 +90,7 @@ else: .     # have such strange definitions?
 # Math:
 
 -: -1 * + .    # substraction
-max: [2] [2] if > : x . x swp x .
+max: [2] [2] if > : x . swp x .
 
 
 # Assert equal (draft, requires strings):
@@ -101,12 +101,12 @@ max: [2] [2] if > : x . x swp x .
 
 # Factorial - long version
 
-factorial: 
+factor: 
     if [1] 0 == then
         x 1 
     return
     else
-        [1] 1 - factorial * 
+        [1] 1 - factor * 
     return
 
 
