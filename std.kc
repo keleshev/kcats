@@ -9,7 +9,7 @@
 # 
 #     <number>
 #         Enter a <number> to push it on stack.
-#         E.g. `1 500 10e-35 Inf NaN` will push the corresponding
+#         E.g. `1 500 10e-35 inf nan` will push the corresponding
 #         floating-point values on stack.
 # 
 #     [<number>] 
@@ -25,7 +25,7 @@
 #         If <condition> commands yields a non-zero value, 
 #         then <commands> are executed until 'return' is encounterd;
 #         if <condition> yields zero value, <other-commands> are
-#         executed (commands after the closest 'return'.
+#         executed (commands after the closest 'return').
 # 
 #     . (i.e. dot) 
 #         A short synonim for 'return' keyword.
@@ -35,7 +35,7 @@
 #     
 #     <filename>.kc (TODO implement)
 #         Load definitions from .kc file with <filename>-name.
-#         E.g. 'math.kc' with load file math.kc from current directory.
+#         E.g. 'math.kc' will load file math.kc from current directory.
 # 
 # Special commands:
 #     q - quit kcats.
@@ -105,10 +105,6 @@ factorial:
 
 fact: [1] 0 == : x x 1 .                  
                  x [1] 1 - fact * .                  
-
-abcdefghij: [1] 0 == : x x 1 .                  
-                 x [1] 1 - abcdefghij * .                  
-
 
 # Note that factorial versions above are identical
 # except for keywords usage.
