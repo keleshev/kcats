@@ -107,7 +107,7 @@ void eval(char sentence[], char context[]) {
      
 int main() {
     char *con = context_new();
-    con = context_add(con, std);
+    //con = context_add(con, std);
     con = context_add_file(con, "std.kc");
     
     char buffer[80];

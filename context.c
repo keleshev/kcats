@@ -1,27 +1,5 @@
 
 
-char std[] = "\n"
-"max: dup2 if > : x x . x swp x .  \n"
-"dup2: [2] [2] . \n"
-"true: 1 . \n"
-"false: 0 . \n"
-"e: 2.71822 . \n"
-"pi: 3.14159 . \n"
-"not: 0 == .  \n"
-"!: not . \n"
-"if: . \n"
-"bool: ! ! . \n"
-"and: * bool . \n"
-"!=: == ! return \n"
-"<: swp > return \n"
-"-: -1 * + return \n"
-"or: ! swp ! and ! return\n"
-//"==: [2] [2] > [3] [3] < or ! swp x swp x return \n"
-"fact: if [1] 0 == : x x 1 .                  \n"
-"                    x [1] 1 - fact * .                  \n"
-"                    x 1 - fact * .       \n"
-//"do: 1 + [1] 10 > then . x do . \n"
-;
 
 char *context_new(void) {
     char *c = malloc(strlen("# Context \n"));
