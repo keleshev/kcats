@@ -15,7 +15,7 @@
 #define log(v) printf(PURPLE "\n[%s:%d] " #v " == " BLUE "%s \n" DEFAULT, __FILE__, __LINE__, v)
 
 #include "stack.c"
-#include "code.c"
+#include "context.c"
 
 
 bool seq(char s1[], char s2[]) {  // string equal
