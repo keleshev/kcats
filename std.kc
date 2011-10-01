@@ -92,12 +92,12 @@ max: [2] [2] if > : x x . x swp x .
 
 # Factorial - long version
 
-factorial-old: 
+factorial: 
     if [1] 0 == then
         x x 1 
     return
     else
-        x [1] 1 - factorial-old * 
+        x [1] 1 - factorial * 
     return
 
 
