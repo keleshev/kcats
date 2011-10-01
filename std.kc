@@ -81,33 +81,33 @@ else: .     # have such strange definitions?
 
 <: swp > .      # less-than
 ==: 
-    if [2] [2] > : x x x false . 
-  x if [2] [2] < : x x x false . 
-                   x x x true .
+    if [2] [2] > : x x false . 
+    if [2] [2] < : x x false . 
+                   x x true  .
 !=: == ! .      # not equal
 
 
 # Math:
 
 -: -1 * + .    # substraction
-max: [2] [2] if > : x x . x swp x .
+max: [2] [2] if > : x . x swp x .
 
 
 # Factorial - long version
 
 factorial: 
     if [1] 0 == then
-        x x 1 
+        x 1 
     return
     else
-        x [1] 1 - factorial * 
+        [1] 1 - factorial * 
     return
 
 
 # Fact. shrt. ver.
 
-fact: [1] 0 == : x x 1 .                  
-                 x [1] 1 - fact * .                  
+fact: [1] 0 == : x 1 .                  
+                 [1] 1 - fact * .                  
 
 # Note that factorial versions above are identical
 # except for keywords usage.

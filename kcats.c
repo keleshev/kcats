@@ -89,7 +89,7 @@ void eval(char sentence[], char context[]) {
     } else {
         if(seq(next, "then") or seq(next, ":")) {
             rest = next_cmd(next, rest);
-            if(stack_peek()==0) { 
+            if(stack_pop()==0) { 
                 rest = dot = strstr(rest, ".");
                 //ret = strstr(rest, "return");
                 //rest = dot < ret ? dot : ret;
