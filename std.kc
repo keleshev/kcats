@@ -51,7 +51,6 @@
 #     *  (product)
 #     /  (division)
 #     >  (greater-than)
-#     == (test for equality)
 
 # 
 # Standard definitons:
@@ -80,8 +79,12 @@ else: .     # have such strange definitions?
 
 # Comparison operators:
 
-!=: == ! .      # not equal
 <: swp > .      # less-than
+==: 
+    if [2] [2] > : x x x false . 
+  x if [2] [2] < : x x x false . 
+                   x x x true .
+!=: == ! .      # not equal
 
 
 # Math:

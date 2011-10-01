@@ -17,7 +17,7 @@ char *context_add(char *context, char *string) {          //log(context);
 
 // context_add_file
 char *context_add_file(char *context, char *filename) {
-    FILE* f = fopen(filename, "r");
+    FILE* f = fopen(filename, "rb");
     if(f == NULL) printf("\nCan't open %s!\n", filename);
     
     // quick & dirty filesize calculation
@@ -30,7 +30,8 @@ char *context_add_file(char *context, char *filename) {
 
     fread(buffer, 1, filesize, f);
     
-    buffer[filesize-1] = '\0';
+    
+    buffer[filesize] = '\0';
 //    printf("filesize == %d\n", filesize);
 
 

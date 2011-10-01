@@ -70,7 +70,7 @@ bool eval_word(char w[], char context[]) {
     else if(seq(w, "/")) stack_infix(/);
     else if(seq(w, ">")) stack_infix(>);
     //else if(seq(w, "!")) stack_prefix_1(!);
-    else if(seq(w, "==")) stack_infix(==);
+    //else if(seq(w, "==")) stack_infix(==);
     else if(p = context_find_def(context, w), p != NULL) eval(p, context);
     else printf(RED "%s? \n" DEFAULT, w);    
     return true;
@@ -90,9 +90,9 @@ void eval(char sentence[], char context[]) {
         if(seq(next, "then") or seq(next, ":")) {
             rest = next_cmd(next, rest);
             if(stack_peek()==0) { 
-                dot = strstr(rest, ".");
-                ret = strstr(rest, "return");
-                rest = dot < ret ? dot : ret;
+                rest = dot = strstr(rest, ".");
+                //ret = strstr(rest, "return");
+                //rest = dot < ret ? dot : ret;
                 rest = next_cmd(next, rest);
                 rest = next_cmd(next, rest);
             }
