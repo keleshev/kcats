@@ -1,12 +1,12 @@
 # kcats - yet another just-for-fun stack-based programming language!
 
-## compile:
-
-    c99 kcats.c -o kcats
-
 ## run:
 
-    ./kcats
+    ./kc
+
+## dependencies:
+     
+Riquires c99 (comes with gcc).
 
 ## help:
 
