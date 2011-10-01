@@ -106,12 +106,9 @@ void eval(char sentence[], char source[]) {
 }
      
 int main() {
-
-    FILE* f = fopen("std.kc", "r");
-    
-    char *src = add_src(std, NULL); 
-    //char *ar *src = add_src_from_file(f, NULL);
-    src = add_src_from_file(f, NULL);
+    char *src = context_new();
+    src = context_add(src, std);
+    src = context_add_file(src, "std.kc");
     
     char buffer[80];
 
