@@ -56,6 +56,7 @@ bool eval_word(char w[], char context[]) {
     //else if(seq(w, "")) printf("oh, hai");
     else 
         if(seq(w, "q")) exit(0);
+    else if(seq(w, "#")) ;
     else if(seq(w, "context")) printf(context);
     else if(seq(w, "return")) return false;
     else if(seq(w, ".")) return false;
@@ -87,6 +88,9 @@ void eval(char sentence[], char context[]) {
     if(is_definition(next)) {
         printf("Unimplemented \n");
     } else {
+        if(seq(next, "#")) {
+            rest = strstr(rest, "\n");
+        }
         if(seq(next, "then") or seq(next, ":")) {
             rest = next_cmd(next, rest);
             if(stack_pop()==0) { 
