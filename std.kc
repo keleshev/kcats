@@ -36,6 +36,10 @@
 #     <filename>.kc (TODO implement)
 #         Load definitions from .kc file with <filename>-name.
 #         E.g. 'math.kc' will load file math.kc from current directory.
+#     
+#     # (i.e. hash)
+#         Unconditional jump til next newline character.
+#         Could be used for comments.
 # 
 # Special commands:
 #     q - quit kcats.
