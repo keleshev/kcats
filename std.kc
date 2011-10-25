@@ -161,6 +161,10 @@ fib:
     if d 1 == : pass .
   else d 1 - fib s 2 - fib + .
 
-longword: 10 20 30 .
+c7: c234567 .
+c8: c2345678 .
+
+c234567: 7 .
+c2345678: 8 .
 
 

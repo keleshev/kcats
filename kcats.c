@@ -129,7 +129,6 @@ void eval(char* sentence, char* context) {
 
     if(eval_word(t.next, context)) eval(t.rest, context);
     free(t.next);
-    
 }
      
 int main() {
