@@ -161,6 +161,6 @@ fib:
     if d 1 == : pass .
   else d 1 - fib s 2 - fib + .
 
-
+longword: 10 20 30 .
 
 
