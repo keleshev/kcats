@@ -1,4 +1,4 @@
-# kcats - yet another just-for-fun stack-based programming language!
+# kcats - "yet another", "just-for-fun" stack-based programming language!
 
 ## run:
 
