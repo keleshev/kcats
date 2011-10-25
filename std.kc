@@ -1,5 +1,5 @@
-# ##############################################################################
-#                       --- kcats standard library ---
+#
+#                     --- kcats standard library ---
 # 
 # Syntax:
 # 
@@ -133,7 +133,7 @@ factoria:
         x 1                 
     return
     else                    
-        d 1 - factor *    
+        d 1 - factoria *    
     return
 
 
@@ -160,8 +160,6 @@ fib:
     if d 0 == : pass .
     if d 1 == : pass .
   else d 1 - fib s 2 - fib + .
-
-
 
 
 

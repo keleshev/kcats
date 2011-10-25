@@ -43,14 +43,6 @@ char *context_add_file(char *context, char *filename) {
 
 
 // context_find_def
-char *context_find_def(char *context, char *word) {
-    char def[sizeof(word) + 2];
-    sprintf(def, "\n%s:", word);
-                   
-    char *r = strstr(context, def);
-    if(r == NULL) return NULL;
-    else return r + strlen(def);
-}       
 
 
 void context_del(char *context) {

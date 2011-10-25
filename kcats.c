@@ -14,9 +14,18 @@
 
 #define log(v) printf(PURPLE "\n[%s:%d] " #v " == " BLUE "%s \n" DEFAULT, __FILE__, __LINE__, v)
 
+#include "str.h"
 #include "stack.c"
-#include "context.c"
+//#include "context.c"
 
+char *find_def(char *context, char *word) {
+    char def[sizeof(word) + 2];
+    sprintf(def, "\n%s:", word);
+                   
+    char *r = strstr(context, def);
+    if(r == NULL) return NULL;
+    else return r + strlen(def);
+}       
 
 bool seq(char s1[], char s2[]) {  // string equal
     if(strcmp(s1, s2) == 0) return true; 
@@ -72,7 +81,7 @@ bool eval_word(char w[], char context[]) {
     else if(seq(w, ">")) stack_infix(>);
     //else if(seq(w, "!")) stack_prefix_1(!);
     //else if(seq(w, "==")) stack_infix(==);
-    else if(p = context_find_def(context, w), p != NULL) eval(p, context);
+    else if(p = find_def(context, w), p != NULL) eval(p, context);
     else printf(RED "%s? \n" DEFAULT, w);    
     return true;
 }
@@ -118,22 +127,19 @@ void eval(char sentence[], char context[]) {
 int main() {
     
     char buffer[80];
-    char *con; 
+    char *context; 
 
-    con = context_new();         
-    con = context_add(con, ""); // HACK  
-    con = context_add_file(con, "std.kc"); 
 
     while(1) {
         stack_print();
         printf(YELLOW "<> " DEFAULT);  // ➤
         fgets(buffer, 80, stdin); 
-
         
-        eval(buffer, con);
+        context = str_from_file_new("std.kc");
+        eval(buffer, context);
+        free(context);
 
     }                        
-    context_del(con);   //   log(con);
 }
     
     
