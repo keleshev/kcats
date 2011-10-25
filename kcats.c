@@ -38,31 +38,33 @@ bool is_definition(char w[]) {
     else return false;
 }
 
-char *token_next(char n[], char s[]) {
-    int i = 0, j = 0;
-    while(s[i] != '\0') {
-        if(not isspace(s[i])) n[j++] = s[i];
-        else if(j > 0) break;
-        i++;
-    }
-    n[j] = '\0';           
-    return &s[i];
-}
 
 typedef struct {
     char* next;
     char* rest;
 } token;
 
-token token_next_rest(char* s) {
+token token_next(char* s) {
     unsigned b = 0;
     unsigned e = 0;
-    while(isspace(s[b])) b++;
+    while(isspace(s[b]) and s[b]) b++;
     e = b;
-    while(!isspace(s[e])) e++;
+    while(!isspace(s[e]) and s[e]) e++;
     token t;
-    t.next = str_sub_new(s, b, e);
+    t.next = str_slice_new(s, b, e);
     t.rest = &s[e];
+    return t;
+}
+
+token token_skip_until(char* s, char* until) {
+    token t = token_next(s);
+    while(not str_eq(t.next, until)) {
+        free(t.next);
+        t = token_next(t.rest);    
+    }
+    free(t.next);
+    t = token_next(t.rest); 
+    return t;
 }
 
 
@@ -83,6 +85,7 @@ bool eval_word(char w[], char context[]) {
     else 
         if(seq(w, "q")) exit(0);
     else if(seq(w, "#")) ;
+    else if(seq(w, ":")) ;
     else if(seq(w, "context")) printf(context);
     else if(seq(w, "return")) return false;
     else if(seq(w, ".")) return false;
@@ -103,46 +106,49 @@ bool eval_word(char w[], char context[]) {
     return true;
 }
 
-void eval(char sentence[], char context[]) {
+void eval(char* sentence, char* context) {
     
-    char next[80]; //, rest[80];
-    char *rest, *dot, *ret;
-    rest = token_next(next, sentence);
-                       // printf("[[[%s|||%s]]]",next,rest);
-    if(*next=='\0' or *next=='\n') return;
+    token t = token_next(sentence);
+    if(str_eq(t.next, "")) return;
     
-    if(is_definition(next)) {
-        printf("Unimplemented \n");
-    } else {
-        if(seq(next, "#")) {
-            rest = strstr(rest, "\n");
-        }
-        if(seq(next, "then") or seq(next, ":")) {
-            rest = token_next(next, rest);
-            if(stack_pop()==0) { 
-                dot = strstr(rest, ".");
-                ret = strstr(rest, "return");
-                if (dot != NULL and ret != NULL) {    
-                    // this gotta be slow:
-                    rest = strlen(dot) > strlen(ret) ? dot : ret;
-                } else if(dot == NULL and ret != NULL) {
-                    rest = ret;
-                } else if(dot != NULL and ret == NULL) {
-                    rest = dot;
-                } else {
-                    printf("then/: does not have a return/.");
-                }
-                rest = token_next(next, rest);
-                rest = token_next(next, rest);
-            }
-            //stack_pop();
-        }                   
-        if(eval_word(next, context)) eval(rest, context);
-    }
+    if(is_definition(t.next)) 
+        printf("Definitions in REPL are not available yet. \n");
+    
+    // Contrlo flow:
+    //if(str_eq(t.next, "#")) {
+    //    free(t.next);
+    //    t = token_skip_until_newline(t.rest);
+    //} else if (str_eq(t.next, "{")) {
+    //    free(t.next);
+    //    t = token_skip_until(t.rest, "}");
+    //} else 
+    if(str_eq(t.next, ":") and stack_pop()==0) {
+        free(t.next);
+        t = token_skip_until(t.rest, ".");
+    }   
+
+    if(eval_word(t.next, context)) eval(t.rest, context);
+    free(t.next);
+    
 }
      
 int main() {
+    token t = token_next("  one \n two three ");
+    printf("<%s|%s>", t.next, t.rest);
+
+    t = token_next(" \n two three ");
+    printf("<%s|%s>", t.next, t.rest);
     
+    t = token_next("three ");
+    printf("<%s|%s>", t.next, t.rest);
+    
+    t = token_next("");
+    printf("<%s|%s>", t.next, t.rest);
+     
+    t = token_skip_until(" abc def ghi . jkl mno ", ".");
+    printf("<%s|%s>", t.next, t.rest);
+    
+
     char* buffer;
     char* context; 
 
