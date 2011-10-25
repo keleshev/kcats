@@ -1,4 +1,4 @@
-################################################################################
+# ##############################################################################
 #                       --- kcats standard library ---
 # 
 # Syntax:
@@ -75,6 +75,7 @@ dd: [2] [2] .
 ddd: [3] [3] [3] .
 xx: x x .
 xxx: x x x .
+s: swp .
 
 
 # Logical operations:
@@ -83,7 +84,7 @@ not:  0 == .
 !:    not .         # '!' short for 'not'
 bool: not not . 
 and:  * bool . 
-or:   ! swp ! and ! .
+or:   ! s ! and ! .
 nor: or not .
 
 
@@ -93,13 +94,13 @@ pass: .
 
 # Comparison operators:
 
-<:  swp > .      # less-than
+<:  s > .      # less-than
 >=: < ! .
 <=: > ! .
 ==: 
-    if [2] [2] > : x x false . 
-    if [2] [2] < : x x false . 
-                   x x true  .
+    if dd > : xx false . 
+    if dd < : xx false . 
+              xx true  .
 !=: == ! .      # not equal
 
 
@@ -107,48 +108,58 @@ pass: .
 
 -: -1 * + .    # substraction
 max: 
-    if [2] [2] > : x . swp x .
+    if dd > : x . s x .
 min:
-    if [2] [2] < : x . swp x .
+    if dd < : x . s x .
 sign: 
-    if [1] 0 > : x +1 .
-    if [1] 0 < : x -1 . 
+    if d 0 > : x +1 .
+    if d 0 < : x -1 . 
             else x  0 .
 abs: 2 ^ 0.5 ^ .
+abs2: if d 0 > : pass . -1 * .
+abs3: d sign * .
 
 
 # Assert equal (draft, requires strings):
 # 
 # assert: 
-#   if [2] [2] == : x .     # if equal - do nothing
+#   if dd == : x .     # if equal - do nothing
 #   else "assert error " pr pr " != " pr pr .     
 
 # Factorial - long version
 
-factor: 
-    if [1] 0 == then        
+factoria: 
+    if d 0 == then        
         x 1                 
     return
     else                    
-        [1] 1 - factor *    
+        d 1 - factor *    
     return
 
 
 # Fact. shrt. ver.
 
-fact: [1] 0 == : x 1 .                  
-                 [1] 1 - fact * .                  
+fact: d 0 == : x 1 .                  
+      d 1 - fact * .                  
 
 # Note that factorial versions above are identical
 # except for keywords usage.
+
+# Calulate factorial for values 1 to 10
+
+f10: 0 _f10 .
+
+_f10:
+    if d 10 == : x .  
+    1 + d fact s _f10 . 
 
 
 # Fibonacci function
 
 fib:
-    if [1] 0 == : pass .
-    if [1] 1 == : pass .
-  else [1] 1 - fib swp 2 - fib + .
+    if d 0 == : pass .
+    if d 1 == : pass .
+  else d 1 - fib s 2 - fib + .
 
 
 

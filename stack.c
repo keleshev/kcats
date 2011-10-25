@@ -4,7 +4,8 @@ typedef double se_t; // stack element type
 int stack_size = 0;
 se_t *bottom_of_stack = NULL;
 #define top_of_stack (bottom_of_stack + (stack_size - 1))
-
+//top = bot + siz - 1
+//siz = top - bot + 1
 #define stack_infix(op) do {se_t _t=stack_pop(); \
                             stack_push(stack_pop() op _t);} while(0)
 #define stack_prefix(op) do {se_t _t=stack_pop(); \

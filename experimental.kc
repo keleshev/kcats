@@ -1,4 +1,39 @@
++: '+' generic .
+pr: 'pr' generic .
+eq: 'eq' generic .
 
+(: '(' '(' type-set .
+
+(.pr: '(' pr . 
+str.pr: builtin.str.pr .
+float.+: builtin.float.+ .
+   
+generic:    
+    [2]     | 1 2 '+' 2
+    type    | 1 2 '+' 'float'
+    swp     | 1 2 'float' '+' 
+    '.'     | 1 2 'float' '+' '.'
+    swp     | 1 2 'float' '.' '+'
+    str.&   | 1 2 'float' '.+'
+    str.&   | 1 2 'float.+'
+    eval .  | 3
+
+generic:    
+    [2]     | 'a' 'b' '+' 'b'
+    type    | 'a' 'b' '+' 'str'
+    swp     | 'a' 'b' 'str' '+' 
+    str.&   | 'a' 'b' 'str+'
+    eval .  | 'ab'
+
+( )+: 
+    if [2] type '(' == : swp x .
+    else + )+ . 
+
+( )+: '+' vararg .
+
+vararg:   
+    if [3] type '(' == : x swp x .
+    else d -> eval ')' <- str.+ eval .
 
 
 

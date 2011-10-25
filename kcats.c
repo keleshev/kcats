@@ -6,11 +6,11 @@
 #include <math.h>
 #include <iso646.h>
 
-#define YELLOW  "\e[1;33m"
-#define PURPLE  "\e[1;35m"
-#define BLUE    "\e[1;34m"
-#define RED     "\e[1;31m"
-#define DEFAULT "\e[0m"
+#define YELLOW  "\033[1;33m"
+#define PURPLE  "\033[1;35m"
+#define BLUE    "\033[1;34m"
+#define RED     "\033[1;31m"
+#define DEFAULT "\033[0m"
 
 #define log(v) printf(PURPLE "\n[%s:%d] " #v " == " BLUE "%s \n" DEFAULT, __FILE__, __LINE__, v)
 
@@ -29,14 +29,14 @@ bool is_definition(char w[]) {
     else return false;
 }
 
-char *next_cmd(char f[], char s[]) {
+char *token_next(char n[], char s[]) {
     int i = 0, j = 0;
     while(s[i] != '\0') {
-        if(not isspace(s[i])) f[j++] = s[i];
+        if(not isspace(s[i])) n[j++] = s[i];
         else if(j > 0) break;
         i++;
     }
-    f[j] = '\0';           
+    n[j] = '\0';           
     return &s[i];
 }
 
@@ -81,9 +81,9 @@ void eval(char sentence[], char context[]) {
     
     char next[80]; //, rest[80];
     char *rest, *dot, *ret;
-    rest = next_cmd(next, sentence);
-                        //printf("[%s|%s]",next,rest);
-    if(*next == '\0') return;
+    rest = token_next(next, sentence);
+                       // printf("[[[%s|||%s]]]",next,rest);
+    if(*next=='\0' or *next=='\n') return;
     
     if(is_definition(next)) {
         printf("Unimplemented \n");
@@ -92,7 +92,7 @@ void eval(char sentence[], char context[]) {
             rest = strstr(rest, "\n");
         }
         if(seq(next, "then") or seq(next, ":")) {
-            rest = next_cmd(next, rest);
+            rest = token_next(next, rest);
             if(stack_pop()==0) { 
                 dot = strstr(rest, ".");
                 ret = strstr(rest, "return");
@@ -106,8 +106,8 @@ void eval(char sentence[], char context[]) {
                 } else {
                     printf("then/: does not have a return/.");
                 }
-                rest = next_cmd(next, rest);
-                rest = next_cmd(next, rest);
+                rest = token_next(next, rest);
+                rest = token_next(next, rest);
             }
             //stack_pop();
         }                   
@@ -126,7 +126,7 @@ int main() {
 
     while(1) {
         stack_print();
-        printf(YELLOW "> " DEFAULT);  // ➤
+        printf(YELLOW "<> " DEFAULT);  // ➤
         fgets(buffer, 80, stdin); 
 
         
