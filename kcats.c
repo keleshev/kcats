@@ -49,6 +49,23 @@ char *token_next(char n[], char s[]) {
     return &s[i];
 }
 
+typedef struct {
+    char* next;
+    char* rest;
+} token;
+
+token token_next_rest(char* s) {
+    unsigned b = 0;
+    unsigned e = 0;
+    while(isspace(s[b])) b++;
+    e = b;
+    while(!isspace(s[e])) e++;
+    token t;
+    t.next = str_sub_new(s, b, e);
+    t.rest = &s[e];
+}
+
+
 bool eval_word(char w[], char context[]) {
     char w2[80];
     //strcpy(w, word);
@@ -126,17 +143,20 @@ void eval(char sentence[], char context[]) {
      
 int main() {
     
-    char buffer[80];
-    char *context; 
+    char* buffer;
+    char* context; 
 
 
     while(1) {
         stack_print();
         printf(YELLOW "<> " DEFAULT);  // ➤
-        fgets(buffer, 80, stdin); 
-        
+
+        buffer = str_input_new();
         context = str_from_file_new("std.kc");
+        
         eval(buffer, context);
+        
+        free(buffer);
         free(context);
 
     }                        
