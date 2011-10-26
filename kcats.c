@@ -10,12 +10,16 @@
 #include "str.h"
 #include "stack.c"
 
-char *find_def(char *context, char *word) {
+#define err(...) do { printf(RED); printf(__VA_ARGS__); printf(DEFAULT); } while (0)
+
+void eval(char* sentence, char* context);
+
+    
+    
+char* find_def(char *context, char *word) {
     char def[strlen(word) + 3];  // account for '\n', ':' and '\0'
-    //char* def = malloc(sizeof(word) + 2);
     sprintf(def, "\n%s:", word);
     char *r = strstr(context, def);
-    //free(def);
     if(r == NULL) return NULL;
     else return r + strlen(def);
 }       
@@ -31,20 +35,20 @@ typedef struct {
 } token;
 
 token token_next(char* s) {
-    unsigned b = 0;
-    unsigned e = 0;
+    unsigned b = 0;  // begin
+    unsigned e = 0;  // end
     while(isspace(s[b]) and s[b]) b++;
     e = b;
     while(!isspace(s[e]) and s[e]) e++;
     token t;
-    t.next = str_slice_new(s, b, e);
+    t.next = str_sub_new(s, b, e);
     t.rest = &s[e];
     return t;
 }
 
-token token_skip_until(char* s, char* until) {
+token token_skip_until_either(char* s, char* ei1, char* ei2) {
     token t = token_next(s);
-    while(not str_eq(t.next, until)) {
+    while(!str_eq(t.next, ei1) and !str_eq(t.next, ei2)) {
         free(t.next);
         t = token_next(t.rest);    
     }
@@ -55,36 +59,20 @@ token token_skip_until(char* s, char* until) {
 
 
 bool eval_word(char w[], char context[]) {
-    char w2[80];
-    //strcpy(w, word);
     se_t number;
-    se_t n2;
-    //char *str[80];
-    
-    
     char *p; 
-    
-    
-    p = find_def(context, w);                      
-    
-    
     unsigned index;                                           
-    if(sscanf(w, "%lf", &number) == 1) {
-            stack_push(number);
-    }
-    else 
-        if(sscanf(w, "[%u]", &index) == 1) stack_push(stack_read(index));
+    if(sscanf(w, "%lf", &number) == 1) stack_push(number);
+    else if(sscanf(w, "[%u]", &index) == 1) stack_push(stack_read(index));
     //else if(sscanf(w, "'%[ -~^']'", str) == 1) printf(str);
     //else if(str_eq(w, "")) printf("oh, hai");
-    else 
-        if(str_eq(w, "q")) exit(0);
+    else if(str_eq(w, "q")) exit(0);
     else if(str_eq(w, "#")) ;
     else if(str_eq(w, ":")) ;
     else if(str_eq(w, "then")) ;
-    else if(str_eq(w, "context")) printf(context);
+    else if(str_eq(w, "context")) printf("%s", context);
     else if(str_eq(w, "return")) return false;
     else if(str_eq(w, ".")) return false;
-   // else if(str_eq(w, "then")) { return false;}
     else if(str_eq(w, "log")) stack_print();
     else if(str_eq(w, "c")) stack_clear();
     else if(str_eq(w, "swp")) stack_swap();
@@ -94,10 +82,8 @@ bool eval_word(char w[], char context[]) {
     else if(str_eq(w, "*")) stack_infix(*);
     else if(str_eq(w, "/")) stack_infix(/);
     else if(str_eq(w, ">")) stack_infix(>);
-    //else if(str_eq(w, "!")) stack_prefix_1(!);
-    //else if(str_eq(w, "==")) stack_infix(==);
-    else if(p != NULL) eval(p, context);
-    else printf(RED "%s? \n" DEFAULT, w);    
+    else if(p = find_def(context, w), p != NULL) eval(p, context);
+    else err("%s? \n", w);    
     return true;
 }
 
@@ -107,7 +93,7 @@ void eval(char* sentence, char* context) {
     if(str_eq(t.next, "")) return;
     
     if(is_def(t.next)) 
-        printf("Definitions in REPL are not available yet. \n");
+        err("Definitions in REPL are not available yet. \n");
     
     // Contrlo flow:
     //if(str_eq(t.next, "#")) {
@@ -119,35 +105,16 @@ void eval(char* sentence, char* context) {
     //} else 
     if((str_eq(t.next, ":") or str_eq(t.next, "then")) and stack_pop()==0) {
         free(t.next);
-        t = token_skip_until(t.rest, ".");
+        t = token_skip_until_either(t.rest, ".", "return");
     }   
 
-    if(eval_word(t.next, context)) {
-        eval(t.rest, context);
-    }
+    if(eval_word(t.next, context)) eval(t.rest, context);
     free(t.next);
 }
      
 int main() {
-    /*char* b = str_input_new();
-    token t = token_next(b);
-    printf("<%s|%s>", t.next, t.rest);
-
-    /*t = token_next(" \n two three ");
-    printf("<%s|%s>", t.next, t.rest);
-    
-    t = token_next("three ");
-    printf("<%s|%s>", t.next, t.rest);
-    
-    t = token_next("");
-    printf("<%s|%s>", t.next, t.rest);
-     
-    t = token_skip_until(" abc def ghi . jkl mno ", ".");
-    printf("<%s|%s>", t.next, t.rest);*/
-
     char* buffer;
     char* context; 
-
 
     while(1) {
         stack_print();
@@ -156,12 +123,10 @@ int main() {
         buffer = str_input_new();
         context = str_from_file_new("std.kc");
         
-        token t = token_next(buffer);
         eval(buffer, context);
         
         free(buffer);
         free(context);
-
     }                        
 }
     
