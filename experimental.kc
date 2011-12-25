@@ -18,6 +18,12 @@ generic:
     str.&   | 1 2 'float.+'
     eval .  | 3
 
+generic:
+    [2] type swp '.' swp str.& str.& eval .
+
+generic:
+    eval(str.&(type($1) '.' $2) $3 $4)
+                    
 generic:    
     [2]     | 'a' 'b' '+' 'b'
     type    | 'a' 'b' '+' 'str'

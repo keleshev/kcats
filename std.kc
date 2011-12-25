@@ -144,7 +144,7 @@ f10: 0 _f10 .
 
 _f10:
     if d 10 == : x .  
-    1 + d fact s _f10 . 
+    1 + d fib s _f10 . 
 
 
 # Fibonacci function

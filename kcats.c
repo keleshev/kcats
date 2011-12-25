@@ -6,8 +6,8 @@
 #include <math.h>
 #include <iso646.h>
 
-#include "colors.h"
-#include "str.h"
+#include "stupid/colors.h"
+#include "stupid/str.h"
 #include "stack.c"
 
 #define err(...) do { printf(RED); printf(__VA_ARGS__); printf(DEFAULT); } while (0)
@@ -118,7 +118,7 @@ int main() {
 
     while(1) {
         stack_print();
-        printf(YELLOW "<> " DEFAULT);  // ➤
+        printf(YELLOW "> " DEFAULT);  // ➤
 
         buffer = str_input_new();
         context = str_from_file_new("std.kc");
@@ -131,18 +131,4 @@ int main() {
 }
     
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
