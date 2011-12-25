@@ -3,10 +3,10 @@
 //#include <stdbool.h>
 //#include <string.h> 
 
-#include "ass.h"
-#include "del.h"
-#include "str.h"          
-#include "log.h"
+#include "stupid/ass.h"
+#include "stupid/del.h"
+#include "stupid/str.h"          
+#include "stupid/log.h"
 
 //
 // Types
@@ -41,11 +41,19 @@ element element_float_new(double f) {
     return el;
 }
 
+double element_float_value(element el) {
+    return el._data._float;
+}
+
 element element_int_new(int i) {
     element el;
     el._type = str_new("int");
     el._data._int = i;
     return el;
+}
+
+int element_int_value(element el) {
+    return el._data._int;
 }
 
 element element_str_new(char* s) {
@@ -55,8 +63,11 @@ element element_str_new(char* s) {
     return el;
 }
 
-stack stack_copy(stack);
+char* element_str_value(element el) {
+    return el._data._str;
+}
 
+stack stack_copy(stack);
 element element_stack_new(stack st) {
     element el;
     el._type = str_new("stack");
@@ -64,10 +75,21 @@ element element_stack_new(stack st) {
     return el;
 }
 
+stack element_stack_value(element el) {
+    return el._data._stack;
+}
+
+bool stack_eq(stack, stack);
 bool element_eq(element e1, element e2) {
     if (!str_eq(e1._type, e2._type)) return false;
-    // TODO not only floats
-    if (e1._data._float != e2._data._float) return false;
+    if (str_endswith(e1._type, " float") || str_eq(e1._type, "float"))
+        if (e1._data._float != e2._data._float) return false;
+    if (str_endswith(e1._type, " int") || str_eq(e1._type, "int")) 
+        if (e1._data._int != e2._data._int) return false;
+    if (str_endswith(e1._type, " str") || str_eq(e1._type, "str")) 
+        if (! str_eq(e1._data._str, e2._data._str)) return false;
+    if (str_endswith(e1._type, " stack") || str_eq(e1._type, "stack")) 
+        if (! stack_eq(e1._data._stack, e2._data._stack)) return false;
     return true;
 }
 
@@ -75,6 +97,7 @@ char* element_type(element el) {
     return el._type;
 }
 
+void stack_print(stack);
 void element_print(element el) {
     if (str_endswith(el._type, " float") || str_eq(el._type, "float")) {
         printf("%g", el._data._float);
@@ -87,6 +110,7 @@ void element_print(element el) {
     }
 }
 
+void stack_del(stack);
 void element_del(element el) {
     if (str_endswith(el._type, " str") || str_eq(el._type, "str")) {
         del(el._data._str);
@@ -135,7 +159,7 @@ stack stack_push(stack st, element el) {
     st._bottom = realloc(st._bottom, new_size * sizeof(element)); 
     ass(st._bottom != NULL);
     st._top = st._bottom + new_size - 1;
-    if (new_size == 1) ass_eq(st._top, st._bottom);
+    if (new_size == 1) ass(st._top == st._bottom);
     ass(st._top != NULL);
     *st._top = el;
     return st; 
@@ -156,14 +180,26 @@ element stack_peek(stack st, signed n) {
 }
 
 #define for_element_in_stack(el, st) \
-    element el=stack_top(st);                                      \
-    for (int _i=1; _i <= stack_size(st); el=stack_peek(st, _i++))
+    element el=stack_bottom(st);                                \
+    for (int _i=stack_size(st)-1; _i>=0; el=stack_peek(st, --_i))
+
+bool stack_eq(stack st1, stack st2) {
+    if (stack_size(st1) != stack_size(st2))
+        return false;
+    for (int i = 0; i < stack_size(st1); i++) {
+        if (not element_eq(stack_peek(st1, i), stack_peek(st2, i)))
+            return false;
+    }
+    return true;
+}
 
 void stack_print(stack st) {
     printf("< ");
-    for_element_in_stack(el, st) {
-        element_print(el);
-        printf(" ");
+    if (stack_size(st) != 0) {
+        for_element_in_stack(el, st) {
+            element_print(el);
+            printf(" ");
+        }
     }
     printf(">");
 }
@@ -180,4 +216,6 @@ void stack_del(stack st) {
     // TODO
 }
 
-
+stack stack_swap(stack st) {
+    // TODO
+}

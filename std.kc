@@ -14,7 +14,7 @@
 # 
 #     [<number>] 
 #         Push a copy of <number>-th element on stack.
-#         E.g. if stack consist of `2 4 8`, [1] will push the first
+#         E.g. if stack consist of `2 4 8`, [0] will push the first
 #         number (8) on top of stack: `2 4 8 8`.
 # 
 #     <name>: <commands> return 
@@ -65,9 +65,9 @@ pi: 3.14159 .
 
 # Syntactic sugar for duplication-d and deletion-x
 
-d: [1] .
-dd: [2] [2] .
-ddd: [3] [3] [3] .
+d: [0] .
+dd: [1] [1] .
+ddd: [2] [2] [2] .
 xx: x x .
 xxx: x x x .
 s: swp .
