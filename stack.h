@@ -131,7 +131,7 @@ stack stack_new() {
     return st;
 }
 
-signed stack_size(stack st) {
+unsigned stack_size(stack st) {
     if (st._top == NULL && st._bottom == NULL) {
         return 0;
     } else {
@@ -155,7 +155,7 @@ element stack_bottom(stack st) {
 
 
 stack stack_push(stack st, element el) {
-    signed new_size = stack_size(st) + 1;  
+    unsigned new_size = stack_size(st) + 1;  
     st._bottom = realloc(st._bottom, new_size * sizeof(element)); 
     ass(st._bottom != NULL);
     st._top = st._bottom + new_size - 1;
@@ -166,7 +166,7 @@ stack stack_push(stack st, element el) {
 }
 
 stack stack_pop(stack st) {
-    signed new_size = stack_size(st) - 1;  
+    unsigned new_size = stack_size(st) - 1;  
     element_del(stack_top(st));
     st._bottom = realloc(st._bottom, new_size * sizeof(element)); 
     if (new_size == 0) return stack_new();
@@ -174,7 +174,7 @@ stack stack_pop(stack st) {
     return st;
 }
 
-element stack_peek(stack st, signed n) {
+element stack_peek(stack st, unsigned n) {
     ass(n <= stack_size(st));
     return *(st._top - n);
 }
