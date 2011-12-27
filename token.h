@@ -144,15 +144,5 @@ token token_find_symbol(char* context, char* symbol) {
 }
 
 
-/*token token_skip_until_either(char* s, char* ei1, char* ei2) {
-    token t = token_next(s);
-    while(!str_eq(t.next, ei1) and !str_eq(t.next, ei2)) {
-        free(t.next);
-        t = token_next(t.rest);    
-    }
-    free(t.next);
-    t = token_next(t.rest); 
-    return t;
-}*/
 
 

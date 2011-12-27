@@ -175,7 +175,7 @@ stack stack_pop(stack st) {
 }
 
 element stack_peek(stack st, unsigned n) {
-    ass(n <= stack_size(st));
+    ass(n < stack_size(st));
     return *(st._top - n);
 }
 
@@ -194,6 +194,7 @@ bool stack_eq(stack st1, stack st2) {
 }
 
 void stack_print(stack st) {
+    //FIXME
     printf("< ");
     if (stack_size(st) != 0) {
         for_element_in_stack(el, st) {

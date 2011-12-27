@@ -1,6 +1,7 @@
 #include <iso646.h>  // or, and, not
-#include "stack.h"
 #include "stupid/ass.h"
+
+#include "stack.h"
 
 
 stack arg_st(void) {
@@ -30,7 +31,9 @@ stack arg_st2(void) {
     return st;
 }
 
-
+//
+// element_*
+//
 
 void test_element_eq__floats(void) {
     element epi = element_float_new(3.14);
@@ -75,7 +78,10 @@ void test_element_eq__stack(stack st, stack st2) {
 
     ass(element_eq(element_stack_new(stack_new()), element_stack_new(stack_new())));
 }
-    
+ 
+//
+// stack_*
+//
 
 void test_stack_new(void) {
     stack st = stack_new();

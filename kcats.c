@@ -5,7 +5,6 @@
 #include "stupid/colors.h"
 #include "stupid/str.h"
 
-#include "stack.h"
 #include "eval.h"
 
 //#define err(...) do { printf(RED); printf(__VA_ARGS__); printf(DEFAULT); } while (0)
@@ -18,7 +17,7 @@ int main() {
 
     while (true) {
         printf(YELLOW);  // ➤
-        stack_print(st);
+        //stack_print(st);
         printf(DEFAULT);
 
         input = str_input_new();
