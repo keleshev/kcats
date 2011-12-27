@@ -11,20 +11,19 @@
      
 int main() {
     stack st = stack_new();
-    st = stack_push(st, element_float_new(2));
     char* input;
     char* context; 
 
     while (true) {
-        printf(YELLOW);  // ➤
-        //stack_print(st);
+        printf(YELLOW);
+        stack_print(st);
         printf(DEFAULT);
 
         input = str_input_new();
         context = str_from_file_new("std.kc");
         
         st = eval(input, context, st);
-        
+
         free(input);
         free(context);
     }                        

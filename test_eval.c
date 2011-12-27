@@ -126,6 +126,13 @@ void test_eval_token__builtin_mul(stack st) {
     ass(element_float_value(stack_peek(st, 1)) == 3.14);
 }
 
+void test_eval_token__def(stack st) {
+    st = eval_token(token_parse("s"), " s: built-in.stack.swap .", st);
+    ass(stack_size(st) == 3);
+    ass(element_float_value(stack_top(st)) == 10);
+    ass(element_float_value(stack_peek(st, 1)) == 0.1);
+}
+
 //
 // eval
 //
@@ -190,7 +197,8 @@ int main() {
     test_eval_token__str_0(arg_st());
     test_eval_token__builtin_swap(arg_st());
     test_eval_token__builtin_mul(arg_st());
-    //test_eval_token__def
+    test_eval_token__def(arg_st());
+    //test_eval_token__context
 
     test_eval__empty(arg_st());
     test_eval__empty_whitespace(arg_st());
@@ -199,8 +207,9 @@ int main() {
     test_eval__0_then_empty(arg_st());
     test_eval__1_then(arg_st());
     test_eval__1_then_empty(arg_st());
-    //test_eval__builtin...
-    //test_eval__def...
+    //test_eval__builtin
+    //test_eval__def
+    //test_eval__context
 
     printf("================= end =================\n");
 }    

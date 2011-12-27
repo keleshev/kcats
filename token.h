@@ -124,9 +124,14 @@ void token_del(token tk) {
 }
 
 token token_find_def(char* context, char* def) {
+    // TODO maybe change oreder (def, context)?
+    ass(str_len(context) > str_len(def));
     token tk = token_parse(context);
-    while (not (token_is_def(tk) and str_eq(token_def_value(tk), def)) 
-               or token_is_empty(tk)) {
+    while (true) {
+        if (token_is_def(tk) and str_eq(token_def_value(tk), def)) 
+            break;
+        if (token_is_empty(tk))
+            break;
         token_del(tk);
         tk = token_parse(tk._rest);
     }
@@ -134,9 +139,14 @@ token token_find_def(char* context, char* def) {
 }
 
 token token_find_symbol(char* context, char* symbol) {
+    // TODO maybe change oreder (symbol, context)?
+    ass(str_len(context) > str_len(symbol));
     token tk = token_parse(context);
-    while (not (token_is_symbol(tk) and str_eq(token_symbol_value(tk), symbol)) 
-               or token_is_empty(tk)) {
+    while (true) {
+        if (token_is_symbol(tk) and str_eq(token_symbol_value(tk), symbol))
+            break;
+        if (token_is_empty(tk))
+            break;
         token_del(tk);
         tk = token_parse(tk._rest);
     }

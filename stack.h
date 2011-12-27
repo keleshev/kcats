@@ -181,7 +181,7 @@ element stack_peek(stack st, unsigned n) {
 
 #define for_element_in_stack(el, st) \
     element el=stack_bottom(st);                                \
-    for (int _i=stack_size(st)-1; _i>=0; el=stack_peek(st, --_i))
+    for (int _i=stack_size(st)-1; _i>=0; el=stack_peek(st, _i--))
 
 bool stack_eq(stack st1, stack st2) {
     if (stack_size(st1) != stack_size(st2))
@@ -197,12 +197,14 @@ void stack_print(stack st) {
     //FIXME
     printf("< ");
     if (stack_size(st) != 0) {
-        for_element_in_stack(el, st) {
-            element_print(el);
+        for (int i = 0; i < stack_size(st); i++) {
+            element_print(stack_peek(st, i));
+        //for_element_in_stack(el, st) {
+            //element_print(el);
             printf(" ");
         }
     }
-    printf(">");
+    printf("> ");
 }
 
 stack stack_copy(stack st) {

@@ -14,6 +14,8 @@ stack eval_builtin(char* symbol, stack st) {
     } else if(str_eq(symbol, "built-in.stack.clear")) { 
         stack_del(st);
         st = stack_new();
+    } else if(str_eq(symbol, "built-in.stack.pop")) {
+        st = stack_pop(st);
     } else if(str_eq(symbol, "built-in.stack.swap")) {
         element el0 = stack_top(st);
         st = stack_pop(st);
@@ -21,8 +23,6 @@ stack eval_builtin(char* symbol, stack st) {
         st = stack_pop(st);
         st = stack_push(st, element_float_new(el0._data._float));
         st = stack_push(st, element_float_new(el1._data._float));
-    } else if(str_eq(symbol, "built-in.stack.pop")) {
-        st = stack_pop(st);
     } else if(str_eq(symbol, "built-in.float.+")) { 
         element el0 = stack_top(st);
         st = stack_pop(st);
@@ -75,12 +75,12 @@ stack eval_token(token tk, char* context, stack st) {
         if (str_startswith(token_symbol_value(tk), "built-in.")) {
             st = eval_builtin(token_symbol_value(tk), st);
         } else {
-            token tkdef = token_find_def(token_symbol_value(tk), context);
+            token tkdef = token_find_def(context, token_symbol_value(tk));
             if (not token_is_empty(tkdef)) {
                 st = eval(token_rest(tkdef), context, st);
                 token_del(tkdef);
             } else {
-                printf("???\n");
+                printf("%s???\n", token_symbol_value(tk));
             }
         }
     }

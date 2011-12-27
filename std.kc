@@ -34,22 +34,21 @@
 #         A short synonim for 'then' keyword.                
 #     
 #     # (i.e. hash)
-#         Unconditional jump til next newline character.
-#         Could be used for comments.
+#         Comment symbol.
+
 # 
-# Special commands:
-#     q - quit kcats.
-#     context - show executing context (definitions).
-#     c - clear stack.
-#     x - delete/pop top element from stack.
-#     swp - swap two top elements on stack.
+# Built-ins:
 # 
-# Builtins:
-#     +  (sum)
-#     ^  (power)
-#     *  (product)
-#     /  (division)
-#     >  (greater-than)
+
+q: built-in.quit .
+c: built-in.stack.clear .
+x: built-in.stack.pop .
+s: built-in.stack.swap .
++: built-in.float.+ .
+*: built-in.float.* .
+/: built-in.float./ .
+^: built-in.float.^ .
+>: built-in.float.> .
 
 # 
 # Standard definitons:
