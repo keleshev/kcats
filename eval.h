@@ -8,9 +8,15 @@
 
 stack eval(char* source, char* context, stack st);
 
-stack eval_builtin(char* symbol, stack st) {
+stack eval_builtin(char* symbol, char* context, stack st) {
     if (str_eq(symbol, "built-in.quit")) {
         exit(0);
+    } else if(str_eq(symbol, "built-in.eval")) {
+        char* tmp = str_auto(element_str_value(stack_top(st)));
+        st = stack_pop(st);
+        st = eval(tmp, context, st);
+    } else if(str_eq(symbol, "built-in.meta")) {
+        st = stack_push(st, element_str_new(element_meta(stack_top(st))));
     } else if(str_eq(symbol, "built-in.stack.clear")) { 
         stack_del(st);
         st = stack_new();
@@ -23,6 +29,18 @@ stack eval_builtin(char* symbol, stack st) {
         st = stack_pop(st);
         st = stack_push(st, el0);
         st = stack_push(st, el1);
+    } else if(str_eq(symbol, "built-in.str.print")) {
+        printf("%s\n", element_str_value(stack_top(st)));
+        st = stack_pop(st);
+    } else if(str_eq(symbol, "built-in.str.input")) {
+        // FIXME, str_input_auto does not work here
+        st = stack_push(st, element_str_new(str_input_new()));
+    } else if(str_eq(symbol, "built-in.str.concat")) {
+        char* tmp = str_cat_auto(element_str_value(stack_peek(st, 1)),
+                                 element_str_value(stack_peek(st, 0)));
+        st = stack_pop(st);
+        st = stack_pop(st);
+        st = stack_push(st, element_str_new(tmp));
     } else if(str_eq(symbol, "built-in.float.+")) { 
         // This reading after popping is wrong...
         element el0 = stack_top(st);
@@ -74,7 +92,7 @@ stack eval_token(token tk, char* context, stack st) {
         st = stack_push(st, element_str_new(token_str_value(tk)));
     } else if (token_is_symbol(tk)) {
         if (str_startswith(token_symbol_value(tk), "built-in.")) {
-            st = eval_builtin(token_symbol_value(tk), st);
+            st = eval_builtin(token_symbol_value(tk), context, st);
         } else {
             token tkdef = token_find_def(context, token_symbol_value(tk));
             if (not token_is_empty(tkdef)) {

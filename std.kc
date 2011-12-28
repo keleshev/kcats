@@ -36,19 +36,27 @@
 #     # (i.e. hash)
 #         Comment symbol.
 
-# 
-# Built-ins:
-# 
-
-q: built-in.quit .
-c: built-in.stack.clear .
+# stack built-ins:
 x: built-in.stack.pop .
 s: built-in.stack.swap .
+c: built-in.stack.clear .
+
+# float built-ins:
 +: built-in.float.+ .
 *: built-in.float.* .
 /: built-in.float./ .
 ^: built-in.float.^ .
 >: built-in.float.> .
+
+# str built-ins:
+print: built-in.str.print .
+input: built-in.str.input .
+&: built-in.str.concat .
+
+# other built-ins:
+eval: built-in.eval .
+meta: built-in.meta .
+q: built-in.quit .
 
 # 
 # Standard definitons:

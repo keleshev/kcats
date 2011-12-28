@@ -93,7 +93,7 @@ bool element_eq(element e1, element e2) {
     return true;
 }
 
-char* element_type(element el) {
+char* element_meta(element el) {
     return el._type;
 }
 

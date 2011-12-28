@@ -183,6 +183,7 @@ char* str_input_new() {
        Allocating powers of 2 sizes would be better. */
     while ((str[i++] = getchar()) != '\n') 
         str = realloc(str, i + 1);
+    str[i - 1] = '\0';  // FIXME not the best way to get rid of \n
     str[i] = '\0';
     return str;
 }
