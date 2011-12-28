@@ -69,8 +69,6 @@ dd: [1] [1] .
 ddd: [2] [2] [2] .
 xx: x x .
 xxx: x x x .
-s: swp .
-
 
 # Logical operations:
 
@@ -81,7 +79,6 @@ and:  * bool .
 or:   ! s ! and ! .
 nor: or not .
 
-
 if:   .     # Guess why 'if' and 'else'
 else: .     # have such strange definitions?
 
@@ -91,8 +88,8 @@ else: .     # have such strange definitions?
 >=: < ! .
 <=: > ! .
 ==: 
-    if dd > : xx false . 
-    if dd < : xx false . 
+    if dd > -> xx false . 
+    if dd < -> xx false . 
               xx true  .
 !=: == ! .      # not equal
 
@@ -101,15 +98,15 @@ else: .     # have such strange definitions?
 
 -: -1 * + .    # substraction
 max: 
-    if dd > : x . s x .
+    if dd > -> x . s x .
 min:
-    if dd < : x . s x .
+    if dd < -> x . s x .
 sign: 
-    if d 0 > : x +1 .
-    if d 0 < : x -1 . 
+    if d 0 > -> x +1 .
+    if d 0 < -> x -1 . 
             else x  0 .
 abs: 2 ^ 0.5 ^ .
-abs2: if d 0 > : pass . -1 * .
+abs2: if d 0 > -> pass . -1 * .
 abs3: d sign * .
 
 
@@ -131,7 +128,7 @@ factorial:
 
 # Fact. shrt. ver.
 
-fact: d 0 == : x 1 .                  
+fact: d 0 == -> x 1 .                  
       d 1 - fact * .                  
 
 # Note that factorial versions above are identical
@@ -142,15 +139,15 @@ fact: d 0 == : x 1 .
 f10: 0 _f10 .
 
 _f10:
-    if d 10 == : x .  
+    if d 10 == -> x .  
     1 + d fib s _f10 . 
 
 
 # Fibonacci function
 
 fib:
-    if d 0 == : .
-    if d 1 == : .
+    if d 0 == -> .
+    if d 1 == -> .
   else d 1 - fib s 2 - fib + .
 
 
