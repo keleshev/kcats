@@ -2,11 +2,7 @@
 
 ## run:
 
-    ./kc
-
-## dependencies:
-     
-Riquires c99 (comes with gcc).
+    c99 kcats.c; ./a.out
 
 ## help:
 
