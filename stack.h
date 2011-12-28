@@ -104,7 +104,7 @@ void element_print(element el) {
     } else if (str_endswith(el._type, " int") || str_eq(el._type, "int")) {
         printf("%i", el._data._int);
     } else if (str_endswith(el._type, " str") || str_eq(el._type, "str")) {
-        printf("%s", el._data._str);
+        printf("\"%s\"", el._data._str);
     } else if (str_endswith(el._type, " stack") || str_eq(el._type, "stack")) {
         stack_print(el._data._stack);
     }
