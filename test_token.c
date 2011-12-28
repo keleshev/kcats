@@ -19,14 +19,14 @@ void test_token_parse__index(void) {
 }
 
 void test_token_parse__float(void) {
-    token tk = token_parse("3.14 2.72 foo bar");
+    token tk = token_parse("3.14 -2.72 foo bar");
     ass(token_is_float(tk));
     ass(token_float_value(tk) == 3.14);
-    ass(str_eq(token_rest(tk), " 2.72 foo bar"));
+    ass(str_eq(token_rest(tk), " -2.72 foo bar"));
 
     token tk2 = token_parse(token_rest(tk));
     ass(token_is_float(tk2));
-    ass(token_float_value(tk2) == 2.72);
+    ass(token_float_value(tk2) == -2.72);
     ass(str_eq(token_rest(tk2), " foo bar"));
 }
 

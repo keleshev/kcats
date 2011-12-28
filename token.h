@@ -84,7 +84,7 @@ token token_parse(char* s) {
         tk._rest = &s[e];
         return tk;
     }
-    if (isdigit(s[e]) and s[e]) {  // number
+    if ((isdigit(s[e]) or ((s[e] == '-' or s[e] == '+') and isdigit(s[e + 1]))) and s[e]) {  // number
         e++;
         while ((not isspace(s[e])) and s[e]) e++;
         tk._kind = _float;
