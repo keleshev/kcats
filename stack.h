@@ -120,6 +120,30 @@ void element_del(element el) {
     del(el._type);
 }
 
+element element_copy(element el) {
+    if (str_endswith(el._type, " float") || str_eq(el._type, "float")) {
+        element el_new;
+        el_new._type = str_new(el._type);
+        el_new._data._float = el._data._float;
+        return el_new;
+    } else if (str_endswith(el._type, " int") || str_eq(el._type, "int")) {
+        element el_new;
+        el_new._type = str_new(el._type);
+        el_new._data._int = el._data._int;
+        return el_new;
+    } else if (str_endswith(el._type, " str") || str_eq(el._type, "str")) {
+        element el_new;
+        el_new._type = str_new(el._type);
+        el_new._data._str = str_new(el._data._str);
+        return el_new;
+    } else if (str_endswith(el._type, " stack") || str_eq(el._type, "stack")) {
+        element el_new;
+        el_new._type = str_new(el._type);
+        el_new._data._stack = stack_copy(el._data._stack);
+        return el_new;
+    }
+}
+
 //
 // Stack functions
 //
@@ -152,7 +176,6 @@ element stack_bottom(stack st) {
     ass(st._bottom != NULL);
     return *st._bottom;
 }
-
 
 stack stack_push(stack st, element el) {
     unsigned new_size = stack_size(st) + 1;  
@@ -212,7 +235,7 @@ void stack_print(stack st) {
 stack stack_copy(stack st) {
     stack new_st = stack_new();
     for_element_in_stack(el, st) {
-        new_st = stack_push(new_st, el);
+        new_st = stack_push(new_st, element_copy(el));
     }
     return new_st;
 }

@@ -17,13 +17,14 @@ stack eval_builtin(char* symbol, stack st) {
     } else if(str_eq(symbol, "built-in.stack.pop")) {
         st = stack_pop(st);
     } else if(str_eq(symbol, "built-in.stack.swap")) {
-        element el0 = stack_top(st);
+        element el0 = element_copy(stack_top(st));
         st = stack_pop(st);
-        element el1 = stack_top(st);
+        element el1 = element_copy(stack_top(st));
         st = stack_pop(st);
-        st = stack_push(st, element_float_new(el0._data._float));
-        st = stack_push(st, element_float_new(el1._data._float));
+        st = stack_push(st, el0);
+        st = stack_push(st, el1);
     } else if(str_eq(symbol, "built-in.float.+")) { 
+        // This reading after popping is wrong...
         element el0 = stack_top(st);
         st = stack_pop(st);
         element el1 = stack_top(st);
@@ -66,7 +67,7 @@ stack eval_builtin(char* symbol, stack st) {
 
 stack eval_token(token tk, char* context, stack st) {
     if (token_is_index(tk)) {
-        st = stack_push(st, stack_peek(st, token_index_value(tk)));
+        st = stack_push(st, element_copy(stack_peek(st, token_index_value(tk))));
     } else if (token_is_float(tk)) {
         st = stack_push(st, element_float_new(token_float_value(tk)));
     } else if (token_is_str(tk)) {

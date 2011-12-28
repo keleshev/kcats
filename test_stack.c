@@ -155,14 +155,13 @@ int main() {
     test_element_eq__int();
     test_element_eq__str();
     test_element_eq__stack(arg_st(), arg_st2());
+    //test_element_copy...
 
     test_stack_new();
     test_stack_push(arg_st());
     test_stack_pop(arg_st());
     test_stack_peek(arg_st());
     test_stack_eq(arg_st(), arg_st2());
-
-    //test_stack__
 
     printf("================= end =================\n");
 }    
