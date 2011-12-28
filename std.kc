@@ -189,6 +189,18 @@ fib:
 #     swp     | 'a' 'b' 'str' '+' 
 #     str.&   | 'a' 'b' 'str+'
 #     eval .  | 'ab'
+#
+# generic: 
+#     except $no-such-function try{
+#         type-last
+#         '.+'
+#         str.&
+#         #eval 
+#         $no-such-function raise
+#     }
+#
+# no-such-function: "no-such-function" make-exception .
+#         
 # 
 # ( )+: 
 #     if [2] type '(' == : swp x .
