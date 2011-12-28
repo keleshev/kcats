@@ -162,5 +162,7 @@ int main() {
     test_stack_peek(arg_st());
     test_stack_eq(arg_st(), arg_st2());
 
+    //test_stack__
+
     printf("================= end =================\n");
 }    
