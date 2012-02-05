@@ -16,49 +16,49 @@ stack arg_st(void) {
 //
 
 void test_eval_builtin__stack_clear(stack st) {
-    st = eval_builtin("built-in.stack.clear", st);
+    st = eval_builtin("built-in.stack.clear", "", st);
     ass(stack_eq(st, stack_new())); 
 }
 
 void test_eval_builtin__stack_swap(stack st) {
-    st = eval_builtin("built-in.stack.swap", st);
+    st = eval_builtin("built-in.stack.swap", "", st);
     ass(element_eq(stack_top(st), element_float_new(10)));
     ass(element_eq(stack_peek(st, 1), element_float_new(0.1)));
 }
 
 void test_eval_builtin__stack_pop(stack st) {
-    st = eval_builtin("built-in.stack.pop", st);
+    st = eval_builtin("built-in.stack.pop", "", st);
     ass(stack_size(st) == 2);
     ass(element_eq(stack_top(st), element_float_new(10)));
     ass(element_eq(stack_bottom(st), element_float_new(3.14)));
 }
 
 void test_eval_builtin__float_sum(stack st) {
-    st = eval_builtin("built-in.float.+", st);
+    st = eval_builtin("built-in.float.+", "", st);
     ass(stack_size(st) == 2);
     ass(element_float_value(stack_top(st)) == 10 + 0.1);
 }
 
 void test_eval_builtin__float_pow(stack st) {
-    st = eval_builtin("built-in.float.^", st);
+    st = eval_builtin("built-in.float.^", "", st);
     ass(stack_size(st) == 2);
     ass(element_float_value(stack_top(st)) == pow(10, 0.1));
 }
 
 void test_eval_builtin__float_mul(stack st) {
-    st = eval_builtin("built-in.float.*", st);
+    st = eval_builtin("built-in.float.*", "", st);
     ass(stack_size(st) == 2);
     ass(element_float_value(stack_top(st)) == 10 * 0.1);
 }
 
 void test_eval_builtin__float_div(stack st) {
-    st = eval_builtin("built-in.float./", st);
+    st = eval_builtin("built-in.float./", "", st);
     ass(stack_size(st) == 2);
     ass(element_float_value(stack_top(st)) == 10 / 0.1);
 }
 
 void test_eval_builtin__float_gt(stack st) {
-    st = eval_builtin("built-in.float.>", st);
+    st = eval_builtin("built-in.float.>", "", st);
     ass(stack_size(st) == 2);
     ass(element_float_value(stack_top(st)) == 10 > 0.1);
 }
