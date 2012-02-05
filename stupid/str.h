@@ -264,10 +264,11 @@ bool str_startswith(char* s, char* start) {
 char* str_find_ptr(char* where, char* what) /* start, end? */ {
     return strstr(where, what);
 }
+ 
 
 // TODO str_find ?
 
-unsigned str_word_count7(char *s) {
+unsigned str_word_count(char *s) {
     unsigned wc = 0;
     for (int i = 0; s[i]; i++) {
         if ((! isspace(s[i])) && (isspace(s[i + 1]) || !s[i + 1])) wc++;
@@ -275,20 +276,12 @@ unsigned str_word_count7(char *s) {
     return wc;
 }
 
-unsigned str_word_count0(char *s) {
-    for (unsigned wc = 0; *s; s++) {
-        if ((not isspace(*s)) and (isspace(s[1]) or s[1] == '\0')) wc++;
-    }
-    return wc;
-}
-
-unsigned str_word_countA(char *s) {
+unsigned str_word_count_(char *s) {
     for (unsigned wc = 0; ; s++) {
         if ((not isspace(*s)) and (isspace(s[1]) or s[1] == '\0')) wc++;
         if (not *s) return wc;
     }
 }
-
 
 /* Python strings methods:
 'capitalize', 'center', 'count', 'decode', 'encode', 'expandtabs', 'format', 'index', ''istitle', ''join', 'ljust', 'lower', 'lstrip', 'partition', 'replace', 'rfind', 'rindex', 'rjust', 'rpartition', 'rsplit', 'rstrip', 'split', 'splitlines', 'strip', 'swapcase', 'title', 'translate', 'upper', 'zfill'
