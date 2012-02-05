@@ -56,19 +56,32 @@ input: built-in.str.input .
 # other built-ins:
 eval: built-in.eval .
 meta: built-in.meta .
+set-meta: built-in.set-meta .
+context: built-in.context .
+#set-context: built-in.set-context .
 q: built-in.quit .
 
-# 
-# Standard definitons:
-#
 
-# Constants:
+# bool type:
 
-true:  1 . 
-false: 0 . 
+true:  1 "bool float" set-meta . 
+false: 0 "bool float" set-meta .
 
-e:  2.71822 . 
-pi: 3.14159 . 
+bool: 0 == -> false . 
+      else true .
+
+bool.str: 
+    if bool true == -> "true" .
+    else "false" .  
+
+
+# constants:
+
+e: 2.71822 "e float" set-type . 
+e.str: "e" .
+
+pi: 3.14159 "pi float" set-type . 
+pi.str: "π" .
 
 # Syntactic sugar for duplication-d and deletion-x
 
@@ -82,7 +95,6 @@ xxx: x x x .
 
 not:  0 == .  
 !:    not .         # '!' short for 'not'
-bool: not not . 
 and:  * bool . 
 or:   ! s ! and ! .
 nor: or not .

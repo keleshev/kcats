@@ -17,6 +17,18 @@ stack eval_builtin(char* symbol, char* context, stack st) {
         st = eval(tmp, context, st);
     } else if(str_eq(symbol, "built-in.meta")) {
         st = stack_push(st, element_str_new(element_meta(stack_top(st))));
+    } else if(str_eq(symbol, "built-in.set-meta")) {
+        // Maybe too much copying?
+        char* tmp = str_auto(element_str_value(stack_top(st)));
+        st = stack_pop(st);
+        element el = element_meta_mod(element_copy(stack_top(st)), tmp);
+        st = stack_pop(st);
+        st = stack_push(st, el);
+    } else if(str_eq(symbol, "built-in.context")) {
+        st = stack_push(st, element_str_new(context));
+    // TODO need to return new context
+    //} else if(str_eq(symbol, "built-in.set-context")) {
+    //    st = stack_push(st, element_str_new(context));
     } else if(str_eq(symbol, "built-in.stack.clear")) { 
         stack_del(st);
         st = stack_new();

@@ -97,6 +97,12 @@ char* element_meta(element el) {
     return el._type;
 }
 
+element element_meta_mod(element el, char* meta) {
+    free(el._type);
+    el._type = str_new(meta);
+    return el;
+}
+
 void stack_print(stack);
 void element_print(element el) {
     if (str_endswith(el._type, " float") || str_eq(el._type, "float")) {

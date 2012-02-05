@@ -267,7 +267,27 @@ char* str_find_ptr(char* where, char* what) /* start, end? */ {
 
 // TODO str_find ?
 
+unsigned str_word_count7(char *s) {
+    unsigned wc = 0;
+    for (int i = 0; s[i]; i++) {
+        if ((! isspace(s[i])) && (isspace(s[i + 1]) || !s[i + 1])) wc++;
+    }
+    return wc;
+}
 
+unsigned str_word_count0(char *s) {
+    for (unsigned wc = 0; *s; s++) {
+        if ((not isspace(*s)) and (isspace(s[1]) or s[1] == '\0')) wc++;
+    }
+    return wc;
+}
+
+unsigned str_word_countA(char *s) {
+    for (unsigned wc = 0; ; s++) {
+        if ((not isspace(*s)) and (isspace(s[1]) or s[1] == '\0')) wc++;
+        if (not *s) return wc;
+    }
+}
 
 
 /* Python strings methods:
